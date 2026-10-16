@@ -337,6 +337,7 @@ class TimedDrop(BaseDrop):
 
 class DropsCampaign:
     def __init__(self, twitch: Twitch, data: JsonType, claimed_benefits: dict[str, datetime]):
+        self.ignore_linked_status: bool = twitch.settings.ignore_linked_status
         self._twitch: Twitch = twitch
         self.id: str = data["id"]
         self.name: str = data["name"]
@@ -393,9 +394,7 @@ class DropsCampaign:
 
     @property
     def eligible(self) -> bool:
-        if self.has_badge_or_emote:
-            return self._twitch.settings.enable_badges_emotes
-        return self.linked
+        return self.linked or self.has_badge_or_emote or self.ignore_linked_status
 
     @cached_property
     def has_badge_or_emote(self) -> bool:
