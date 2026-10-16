@@ -66,6 +66,7 @@ hiddenimports: list[str] = [
     "setuptools._distutils.dir_util",
     "setuptools._distutils.file_util",
     "setuptools._distutils.archive_util",
+    "gui",
 ]
 
 if sys.platform == "linux":
